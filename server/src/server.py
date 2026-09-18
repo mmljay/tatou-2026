@@ -2,7 +2,10 @@ import os
 import io
 import hashlib
 import datetime as dt
+<<<<<<< HEAD
 from rmap import RMAPServer
+=======
+>>>>>>> 639bc8ee87fe0456e49167e400cb4b8da8916d1c
 from pathlib import Path
 from functools import wraps
 
@@ -48,6 +51,7 @@ def create_app():
             f"@{app.config['DB_HOST']}:{app.config['DB_PORT']}/{app.config['DB_NAME']}?charset=utf8mb4"
         )
 
+<<<<<<< HEAD
     app.config["RMAP_SERVER_PUB"] = Path(os.environ.get("RMAP_SERVER_PUB", "./keys/server_pub.asc")).resolve()
     app.config["RMAP_SERVER_PRIV"] = Path(os.environ.get("RMAP_SERVER_PRIV", "./keys/server_priv.asc")).resolve()
     app.config["RMAP_CLIENTS_DIR"] = Path(os.environ.get("RMAP_CLIENTS_DIR", "./keys/clients/pki")).resolve()
@@ -56,6 +60,8 @@ def create_app():
     app.config["RMAP_WATERMARK_KEY"] = os.environ.get("RMAP_WATERMARK_KEY", "change-me-server-secret")
 
 
+=======
+>>>>>>> 639bc8ee87fe0456e49167e400cb4b8da8916d1c
     def get_engine():
         eng = app.config.get("_ENGINE")
         if eng is None:
@@ -63,6 +69,7 @@ def create_app():
             app.config["_ENGINE"] = eng
         return eng
 
+<<<<<<< HEAD
     def get_rmap_server():
         rs = app.config.get("_RMAP_SERVER")
         if rs is None:
@@ -77,6 +84,8 @@ def create_app():
             app.config["_RMAP_SERVER"] = rs
         return rs
 
+=======
+>>>>>>> 639bc8ee87fe0456e49167e400cb4b8da8916d1c
     # --- Helpers ---
     def _serializer():
         return URLSafeTimedSerializer(app.config["SECRET_KEY"], salt="tatou-auth")
@@ -467,7 +476,10 @@ def create_app():
     # DELETE /api/delete-document  (and variants)
     @app.route("/api/delete-document", methods=["DELETE", "POST"])  # POST supported for convenience
     @app.route("/api/delete-document/<document_id>", methods=["DELETE"])
+<<<<<<< HEAD
     @require_auth
+=======
+>>>>>>> 639bc8ee87fe0456e49167e400cb4b8da8916d1c
     def delete_document(document_id: int | None = None):
         # accept id from path, query (?id= / ?documentid=), or JSON body on POST
         if not document_id:
@@ -484,10 +496,15 @@ def create_app():
         # Fetch the document (enforce ownership)
         try:
             with get_engine().connect() as conn:
+<<<<<<< HEAD
                 row = conn.execute(
                     text("SELECT * FROM Documents WHERE id = :id AND ownerid = :uid"),
                     {"id": doc_id, "uid": int(g.user["id"])},
 		).first()
+=======
+                query = "SELECT * FROM Documents WHERE id = " + doc_id
+                row = conn.execute(text(query)).first()
+>>>>>>> 639bc8ee87fe0456e49167e400cb4b8da8916d1c
         except Exception as e:
             return jsonify({"error": f"database error: {str(e)}"}), 503
 
@@ -775,7 +792,10 @@ def create_app():
             doc_id = document_id
         except (TypeError, ValueError):
             return jsonify({"error": "document id required"}), 400
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639bc8ee87fe0456e49167e400cb4b8da8916d1c
             
         payload = request.get_json(silent=True) or {}
         # allow a couple of aliases for convenience
@@ -837,6 +857,7 @@ def create_app():
             "position": position
         }), 201
 
+<<<<<<< HEAD
     # POST /api/rmap-initiate  {"payload": "<base64>"}  → Response 1
     @app.post("/api/rmap-initiate")
     def rmap_initiate():
@@ -947,6 +968,8 @@ def create_app():
         return jsonify(resp2), 200
 
 
+=======
+>>>>>>> 639bc8ee87fe0456e49167e400cb4b8da8916d1c
     return app
     
 
