@@ -209,3 +209,8 @@ __marimo__/
 flag
 server/flag
 server/keys/
+
+# Secrets / coursework flags
+/flag
+/server/flag
+.env
