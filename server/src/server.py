@@ -494,8 +494,6 @@ def create_app():
                     text("SELECT * FROM Documents WHERE id = :id AND ownerid = :uid"),
                     {"id": doc_id, "uid": int(g.user["id"])},
 		).first()
-                query = "SELECT * FROM Documents WHERE id = " + doc_id
-                row = conn.execute(text(query)).first()
 
         except Exception as e:
             return jsonify({"error": f"database error: {str(e)}"}), 503
@@ -800,7 +798,46 @@ def create_app():
         if not method or not isinstance(key, str):
             return jsonify({"error": "method, and key are required"}), 400
 
-        # lookup the document; FIXME enforce ownership
+        link = payload.get("link")
+
+        if not method or not isinstance(key, str):
+            return jsonify({"error": "method and key are required"}), 400
+
+        if link:
+            try:
+                with get_engine().connect() as conn:
+                    row = conn.execute(
+                        text("""
+                            SELECT v.path FROM Versions v
+                            JOIN Documents d ON d.id = v.documentid
+                            WHERE v.link = :link AND d.ownerid = :uid
+                            LIMIT 1
+                        """),
+                        {"link": link, "uid": int(g.user["id"])},
+                    ).first()
+            except Exception as e:
+                return jsonify({"error": f"database error: {str(e)}"}), 503
+
+            if not row:
+                return jsonify({"error": "version not found"}), 404
+
+            file_path = Path(row.path)
+            if not file_path.exists():
+                return jsonify({"error": "file missing on disk"}), 410
+
+            try:
+                secret = WMUtils.read_watermark(method=method, pdf=str(file_path), key=key)
+            except Exception as e:
+                return jsonify({"error": f"Error when attempting to read watermark: {e}"}), 400
+
+            return jsonify({"link": link, "secret": secret, "method": method, "position": position}), 200
+
+        try:
+            doc_id = int(doc_id)
+        except (TypeError, ValueError):
+            return jsonify({"error": "document_id (int) is required"}), 400
+
+        # lookup the document; enforce ownership
         try:
             with get_engine().connect() as conn:
                 row = conn.execute(
@@ -909,7 +946,7 @@ def create_app():
                 pdf=str(file_path),
                 secret=identity,
                 key=app.config["RMAP_WATERMARK_KEY"],
-                method="toy-eof",
+                method="invisible-text",
                 position=None,
             )
         except Exception as e:
@@ -937,7 +974,7 @@ def create_app():
                         "link": expected_link,
                         "intended_for": identity,
                         "secret": identity,
-                        "method": "toy-eof",
+                        "method": "invisible-text",
                         "position": "",
                         "path": str(dest_path),
                     },
@@ -965,4 +1002,3 @@ app = create_app()
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-
