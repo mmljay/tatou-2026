@@ -52,7 +52,7 @@ def create_app():
 
     app.config["RMAP_SERVER_PUB"] = Path(os.environ.get("RMAP_SERVER_PUB", "./keys/server_pub.asc")).resolve()
     app.config["RMAP_SERVER_PRIV"] = Path(os.environ.get("RMAP_SERVER_PRIV", "./keys/server_priv.asc")).resolve()
-    app.config["RMAP_CLIENTS_DIR"] = Path(os.environ.get("RMAP_CLIENTS_DIR", "./keys/clients/Public keys")).resolve()
+    app.config["RMAP_CLIENTS_DIR"] = Path(os.environ.get("RMAP_CLIENTS_DIR", "./keys/clients/pki")).resolve()
     app.config["RMAP_LINK_PREFIX"] = os.environ.get("RMAP_LINK_PREFIX", "http://localhost:5000/api/get-version/")
     app.config["RMAP_SERVER_KEY_PASSPHRASE"] = os.environ.get("RMAP_SERVER_KEY_PASSPHRASE", "")
     app.config["RMAP_WATERMARK_KEY"] = os.environ.get("RMAP_WATERMARK_KEY", "change-me-server-secret")

@@ -78,6 +78,9 @@ class InvisibleTextWatermark(WatermarkingMethod):
 
         # Open PDF and draw invisible text on page 0
         doc = fitz.open(stream=data, filetype="pdf")
+        if doc.page_count == 0:
+            doc.close()
+            raise ValueError("PDF has no pages — cannot apply invisible-text watermark")
         page = doc[0]
 
         # White text, font size 1, bottom-left corner — invisible to human readers
@@ -94,7 +97,14 @@ class InvisibleTextWatermark(WatermarkingMethod):
         return out
 
     def is_watermark_applicable(self, pdf, position=None) -> bool:
-        return True
+        try:
+            data = load_pdf_bytes(pdf)
+            doc = fitz.open(stream=data, filetype="pdf")
+            count = doc.page_count
+            doc.close()
+            return count > 0
+        except Exception:
+            return False
 
     def read_secret(self, pdf, key: str) -> str:
         data = load_pdf_bytes(pdf)
