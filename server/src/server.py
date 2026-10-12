@@ -135,10 +135,23 @@ def create_app():
     # POST /api/create-user {email, login, password}
     @app.post("/api/create-user")
     def create_user():
-        payload = request.get_json(silent=True) or {}
-        email = (payload.get("email") or "").strip().lower()
-        login = (payload.get("login") or "").strip()
-        password = payload.get("password") or ""
+        payload = request.get_json(silent=True)
+
+        # FZ-001: Validate JSON structure and field types
+        if not isinstance(payload, dict):
+            return jsonify({"error": "JSON object required"}), 400
+
+        if not all(
+            isinstance(payload.get(field), str)
+            for field in ("email", "login", "password")
+        ):
+            return jsonify({
+                "error": "email, login, and password must be strings"
+            }), 400
+
+        email = payload["email"].strip().lower()
+        login = payload["login"].strip()
+        password = payload["password"]
         if not email or not login or not password:
             return jsonify({"error": "email, login, and password are required"}), 400
 
