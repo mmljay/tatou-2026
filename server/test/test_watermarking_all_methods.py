@@ -27,11 +27,11 @@ if not CASES:
 def sample_pdf_path(tmp_path_factory) -> Path:
     """Minimal but recognizable PDF bytes."""
     pdf = tmp_path_factory.mktemp("pdfs") / "sample.pdf"
-    pdf.write_bytes(
-        b"%PDF-1.4\n"
-        b"1 0 obj\n<< /Type /Catalog >>\nendobj\n"
-        b"%%EOF\n"
-    )
+    import fitz
+    with fitz.open() as doc:
+        page = doc.new_page()
+        page.insert_text((72, 72), "Tatou watermark test document")
+        doc.save(str(pdf))
     return pdf
 
 @pytest.fixture(scope="session")
