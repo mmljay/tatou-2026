@@ -44,6 +44,8 @@ from watermarking_method import (
 from add_after_eof import AddAfterEOF
 from unsafe_bash_bridge_append_eof import UnsafeBashBridgeAppendEOF
 from invisible_text_watermark import InvisibleTextWatermark
+from metadata_watermark import MetadataWatermark
+from whitespace_watermark import WhitespaceWatermark
 
 # --------------------
 # Method registry
@@ -52,7 +54,9 @@ from invisible_text_watermark import InvisibleTextWatermark
 METHODS: Dict[str, WatermarkingMethod] = {
     AddAfterEOF.name: AddAfterEOF(),
     UnsafeBashBridgeAppendEOF.name: UnsafeBashBridgeAppendEOF(),
-    InvisibleTextWatermark.name: InvisibleTextWatermark()
+    InvisibleTextWatermark.name: InvisibleTextWatermark(),
+    MetadataWatermark.name: MetadataWatermark(),
+    WhitespaceWatermark.name: WhitespaceWatermark(),
 }
 """Registry of available watermarking methods.
 

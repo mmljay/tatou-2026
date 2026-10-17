@@ -23,6 +23,8 @@ services:
       - RMAP_SERVER_KEY_PASSPHRASE=${RMAP_SERVER_KEY_PASSPHRASE}
       - RMAP_LINK_PREFIX=${RMAP_LINK_PREFIX}
       - RMAP_WATERMARK_KEY=${RMAP_WATERMARK_KEY}
+      - RMAP_SOURCE_DOCUMENT_ID=${RMAP_SOURCE_DOCUMENT_ID:-3}
+      - SECRET_KEY=${SECRET_KEY}
     depends_on:
       db:
         condition: service_healthy
