@@ -1,159 +1,84 @@
-"""invisible_text_watermark.py
-
-Watermarking method that embeds a secret as invisible white text
-drawn directly onto the first page of the PDF using PyMuPDF.
-
-The text is rendered in font size 1, white color, at a fixed position
-in the bottom-left corner — invisible to readers but extractable
-programmatically. The secret is authenticated with HMAC-SHA256 using
-the provided key, then Base64-encoded and written as the invisible text.
-
-Author: Yomal Moderage — Group 17
-"""
-from __future__ import annotations
-
-from typing import Final
 import base64
+import binascii
 import hashlib
 import hmac
-import json
+import os
 
-import pymupdf as fitz  # PyMuPDF
+import pymupdf as fitz
+from cryptography.exceptions import InvalidTag
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
 from watermarking_method import (
-    InvalidKeyError,
-    SecretNotFoundError,
-    WatermarkingMethod,
-    load_pdf_bytes,
+    InvalidKeyError, SecretNotFoundError, WatermarkingMethod, load_pdf_bytes
 )
 
-MARKER = "WM-INVISIBLE-V1:"
+MARKER = "WM-INVISIBLE-V2:"
+CONTEXT = b"wm:invisible-text:v2:aes-gcm"
 
 
 class InvisibleTextWatermark(WatermarkingMethod):
-    """Embeds secret as invisible white text on the first PDF page.
-
-    The payload written into the PDF is:
-        WM-INVISIBLE-V1:<base64url(json)>
-
-    JSON schema: {"v":1,"alg":"HMAC-SHA256","mac":"<hex>","secret":"<b64>"}
-    """
-
-    name: Final[str] = "invisible-text"
-    _CONTEXT: Final[bytes] = b"wm:invisible-text:v1:"
+    name = "invisible-text"
 
     @staticmethod
-    def get_usage() -> str:
-        return (
-            "Embeds secret as invisible white text on the first page. "
-            "Key is used for HMAC-SHA256 authentication. Position is ignored."
+    def get_usage():
+        return "Encrypts the secret and stores it as non-visible PDF text."
+
+    @staticmethod
+    def _key(key):
+        if not isinstance(key, str) or not key:
+            raise ValueError("Key must not be empty")
+        return hmac.new(key.encode(), CONTEXT, hashlib.sha256).digest()
+
+    def add_watermark(self, pdf, secret, key, position=None):
+        if not isinstance(secret, str) or not secret:
+            raise ValueError("Secret must not be empty")
+
+        nonce = os.urandom(12)
+        data = AESGCM(self._key(key)).encrypt(
+            nonce, secret.encode(), MARKER.encode()
         )
+        token = base64.urlsafe_b64encode(nonce + data).decode()
 
-    def add_watermark(
-        self,
-        pdf,
-        secret: str,
-        key: str,
-        position: str | None = None,
-    ) -> bytes:
-        data = load_pdf_bytes(pdf)
-        if not secret:
-            raise ValueError("Secret must be a non-empty string")
-        if not key:
-            raise ValueError("Key must be a non-empty string")
+        with fitz.open(stream=load_pdf_bytes(pdf), filetype="pdf") as doc:
+            if not doc.page_count:
+                raise ValueError("PDF has no pages")
+            page = doc[0]
+            page.insert_text(
+                fitz.Point(1, max(12, page.rect.height - 12)),
+                MARKER + token,
+                fontsize=1,
+                render_mode=3,
+                overlay=False,
+            )
+            return doc.tobytes(garbage=4, deflate=True)
 
-        # Build authenticated payload
-        secret_bytes = secret.encode("utf-8")
-        mac_hex = self._mac_hex(secret_bytes, key)
-        obj = {
-            "v": 1,
-            "alg": "HMAC-SHA256",
-            "mac": mac_hex,
-            "secret": base64.b64encode(secret_bytes).decode("ascii"),
-        }
-        payload_b64 = base64.urlsafe_b64encode(
-            json.dumps(obj, separators=(",", ":")).encode("utf-8")
-        ).decode("ascii")
-        text_to_embed = MARKER + payload_b64
-
-        # Open PDF and draw invisible text on page 0
-        doc = fitz.open(stream=data, filetype="pdf")
-        if doc.page_count == 0:
-            doc.close()
-            raise ValueError("PDF has no pages — cannot apply invisible-text watermark")
-        page = doc[0]
-
-        # White text, font size 1, bottom-left corner — invisible to human readers
-        page.insert_text(
-            fitz.Point(1, page.rect.height - 1),
-            text_to_embed,
-            fontsize=1,
-            color=(1, 1, 1),   # RGB white
-            overlay=False,
-        )
-
-        out = doc.tobytes(garbage=4, deflate=True)
-        doc.close()
-        return out
-
-    def is_watermark_applicable(self, pdf, position=None) -> bool:
+    def is_watermark_applicable(self, pdf, position=None):
         try:
-            data = load_pdf_bytes(pdf)
-            doc = fitz.open(stream=data, filetype="pdf")
-            count = doc.page_count
-            doc.close()
-            return count > 0
+            with fitz.open(stream=load_pdf_bytes(pdf), filetype="pdf") as doc:
+                return doc.page_count > 0 and not doc.needs_pass
         except Exception:
             return False
 
-    def read_secret(self, pdf, key: str) -> str:
-        data = load_pdf_bytes(pdf)
-        if not key:
-            raise ValueError("Key must be a non-empty string")
+    def read_secret(self, pdf, key):
+        with fitz.open(stream=load_pdf_bytes(pdf), filetype="pdf") as doc:
+            text = "".join(page.get_text("text") for page in doc)
 
-        doc = fitz.open(stream=data, filetype="pdf")
-        page = doc[0]
+        if text.count(MARKER) != 1:
+            raise SecretNotFoundError("Watermark missing or duplicated")
 
-        # Extract all text including invisible
-        text = page.get_text("text")
-        doc.close()
-
-        # Find our marker
-        idx = text.find(MARKER)
-        if idx == -1:
-            raise SecretNotFoundError("No invisible-text watermark found")
-
-        payload_b64 = text[idx + len(MARKER):].strip().split()[0]
-
+        token = text.split(MARKER, 1)[1].split()[0]
         try:
-            obj = json.loads(base64.urlsafe_b64decode(payload_b64))
-        except Exception as e:
-            raise SecretNotFoundError("Malformed watermark payload") from e
-
-        if not (isinstance(obj, dict) and obj.get("v") == 1):
-            raise SecretNotFoundError("Unsupported watermark version")
-        if obj.get("alg") != "HMAC-SHA256":
-            raise SecretNotFoundError("Unsupported algorithm")
-
-        try:
-            mac_hex = str(obj["mac"])
-            secret_bytes = base64.b64decode(obj["secret"].encode("ascii"))
-        except Exception as e:
-            raise SecretNotFoundError("Invalid payload fields") from e
-
-        expected = self._mac_hex(secret_bytes, key)
-        if not hmac.compare_digest(mac_hex, expected):
-            raise InvalidKeyError("Key failed to authenticate the watermark")
-
-        return secret_bytes.decode("utf-8")
-
-    def _mac_hex(self, secret_bytes: bytes, key: str) -> str:
-        hm = hmac.new(
-            key.encode("utf-8"),
-            self._CONTEXT + secret_bytes,
-            hashlib.sha256,
-        )
-        return hm.hexdigest()
+            raw = base64.b64decode(
+                token.encode(), altchars=b"-_", validate=True
+            )
+            secret = AESGCM(self._key(key)).decrypt(
+                raw[:12], raw[12:], MARKER.encode()
+            )
+            return secret.decode()
+        except InvalidTag as exc:
+            raise InvalidKeyError("Wrong key or changed watermark") from exc
+        except (ValueError, UnicodeError, binascii.Error) as exc:
+            raise SecretNotFoundError("Invalid watermark data") from exc
 
 
 __all__ = ["InvisibleTextWatermark"]
