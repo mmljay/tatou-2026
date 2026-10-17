@@ -1,0 +1,81 @@
+=== Targeted Probing Campaign — Evidence Collection ===
+Collected: 2026-10-17T18:50:43Z
+
+--- All adversarial accounts and their uploaded documents ---
+login	doc_id	uploaded_name
+attacker_4412	685	probe
+attacker_4412	686	../../Mr_Important/20261004T230601806573Z__flag_3
+attacker_4412	687	..%2fMr_Important%2f20261004T230601806573Z__flag_3
+attacker_4412	688	..%252fMr_Important%252f20261004T230601806573Z__flag_3
+attk_6549	689	probe
+attk_6549	690	../../Mr_Important/20261004T230601806573Z__flag_3
+attk_6549	691	..%2fMr_Important%2f20261004T230601806573Z__flag_3
+attk_6549	692	..%252fMr_Important%252f20261004T230601806573Z__flag_3
+cc_user_a	627	CC Access Control Test
+flag1_hunter	708	decoy
+flag1_hunter	709	exploit_grp17
+flag1_hunter	710	loot2
+flag1_hunter	711	exploit_v2
+poc_171528829	682	pocflag
+pwn_093938838466	559	evil.pkl
+pwn_124328784852	561	evil.pkl
+pwn_133726426653	626	evil.pkl
+pwn_133745382650	563	evil.pkl
+pwn_134414016197	564	evil.pkl
+pwn_140404094221	565	evil.pkl
+pwn_221701874213	584	evil.pkl
+sha1_probe	705	sha1test
+sha1_probe	706	sha1test
+sha1_probe	707	sha1test
+ssti_probe	713	test
+
+--- pwn_* / evil.pkl cluster (TM-10 — serialized plugin / pickle deserialization) ---
+login	id	name
+pwn_093938838466	559	evil.pkl
+pwn_124328784852	561	evil.pkl
+pwn_133726426653	626	evil.pkl
+pwn_133745382650	563	evil.pkl
+pwn_134414016197	564	evil.pkl
+pwn_140404094221	565	evil.pkl
+pwn_221701874213	584	evil.pkl
+
+--- attacker_4412 / attk_6549 — path traversal against Mr_Important/flag_3 ---
+login	id	name
+attacker_4412	685	probe
+attacker_4412	686	../../Mr_Important/20261004T230601806573Z__flag_3
+attacker_4412	687	..%2fMr_Important%2f20261004T230601806573Z__flag_3
+attacker_4412	688	..%252fMr_Important%252f20261004T230601806573Z__flag_3
+attk_6549	689	probe
+attk_6549	690	../../Mr_Important/20261004T230601806573Z__flag_3
+attk_6549	691	..%2fMr_Important%2f20261004T230601806573Z__flag_3
+attk_6549	692	..%252fMr_Important%252f20261004T230601806573Z__flag_3
+
+--- sha1_probe — legacy predictable SHA-1 link scheme ---
+login	id	name
+sha1_probe	705	sha1test
+sha1_probe	706	sha1test
+sha1_probe	707	sha1test
+
+--- ssti_probe — server-side template injection ---
+login	id	name
+ssti_probe	713	test
+
+--- flag1_hunter — explicitly named this group (exploit_grp17) ---
+login	id	name
+flag1_hunter	708	decoy
+flag1_hunter	709	exploit_grp17
+flag1_hunter	710	loot2
+flag1_hunter	711	exploit_v2
+
+--- cc_user_a / poc_171528829 — generic access-control / PoC testing ---
+login	id	name
+cc_user_a	627	CC Access Control Test
+poc_171528829	682	pocflag
+
+--- Supporting checks: Mr_Important/flag_3 case study (doc 646) ---
+Document 646 (real target):
+id	name	ownerid
+646	flag_3	596
+Versions for document 646 (should be empty — no watermark ever created):
+security.log entries for doc_id=646 (should be empty — attack never reached this endpoint):
+(no matches)

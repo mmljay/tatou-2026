@@ -1,0 +1,2 @@
+2026-10-15 20:28:32,337 WARNING ACCESS_DENIED action=get_document user=bob_b5199a28 user_id=639 doc_id=734 ip=172.19.0.1
+2026-10-15 20:28:32,339 WARNING ACCESS_DENIED action=get_document user=bob_b5199a28 user_id=639 doc_id=734 ip=172.19.0.1

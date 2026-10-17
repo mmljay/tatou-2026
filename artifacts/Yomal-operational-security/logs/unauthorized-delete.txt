@@ -1,0 +1,3 @@
+2026-10-15 20:28:32,346 WARNING ACCESS_DENIED action=delete_document user=bob_b5199a28 user_id=639 doc_id=734 ip=172.19.0.1
+2026-10-15 20:28:32,347 WARNING ACCESS_DENIED action=delete_document user=bob_b5199a28 user_id=639 doc_id=734 ip=172.19.0.1
+2026-10-15 20:28:32,348 WARNING ACCESS_DENIED action=delete_document user=bob_b5199a28 user_id=639 doc_id=734 ip=172.19.0.1

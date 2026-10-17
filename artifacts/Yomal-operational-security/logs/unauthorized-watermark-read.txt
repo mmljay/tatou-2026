@@ -1,0 +1,1 @@
+2026-10-15 20:28:32,356 WARNING ACCESS_DENIED action=read_watermark_version user=bob_b5199a28 user_id=639 doc_id=via-link ip=172.19.0.1

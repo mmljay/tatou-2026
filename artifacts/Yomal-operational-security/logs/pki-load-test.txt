@@ -1,0 +1,37 @@
+[rmap] INFO: RMAPServer initialized.
+[rmap] INFO: Loaded identity 'Group_01' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_01.asc
+[rmap] INFO: Loaded identity 'Group_02' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_02.asc
+[rmap] INFO: Loaded identity 'Group_03' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_03.asc
+[rmap] INFO: Loaded identity 'Group_04' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_04.asc
+[rmap] INFO: Loaded identity 'Group_05' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_05.asc
+[rmap] INFO: Loaded identity 'Group_06' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_06.asc
+[rmap] INFO: Loaded identity 'Group_07' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_07.asc
+[rmap] INFO: Loaded identity 'Group_08' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_08.asc
+[rmap] INFO: Loaded identity 'Group_09' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_09.asc
+[rmap] INFO: Loaded identity 'Group_10' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_10.asc
+[rmap] INFO: Loaded identity 'Group_11' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_11.asc
+[rmap] INFO: Loaded identity 'Group_12' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_12.asc
+[rmap] INFO: Loaded identity 'Group_13' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_13.asc
+[rmap] INFO: Loaded identity 'Group_14' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_14.asc
+[rmap] INFO: Loaded identity 'Group_15' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_15.asc
+[rmap] INFO: Loaded identity 'Group_16' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_16.asc
+[rmap] INFO: Loaded identity 'Group_17' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_17.asc
+[rmap] INFO: Loaded identity 'Group_18' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_18.asc
+[rmap] INFO: Loaded identity 'Group_19' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_19.asc
+[rmap] INFO: Loaded identity 'Group_20' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_20.asc
+[rmap] INFO: Loaded identity 'Group_21' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_21.asc
+[rmap] INFO: Loaded identity 'Group_22' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_22.asc
+[rmap] INFO: Loaded identity 'Group_24' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_24.asc
+[rmap] INFO: Loaded identity 'Group_25' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_25.asc
+[rmap] INFO: Loaded identity 'Group_27' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_27.asc
+[rmap] INFO: Loaded identity 'Group_29' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_29.asc
+[rmap] INFO: Loaded identity 'Group_30' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_30.asc
+[rmap] INFO: Loaded identity 'Group_32' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_32.asc
+[rmap] INFO: Loaded identity 'Group_34' from /home/softsec/tatou-2026/server/keys/clients/pki/Group_34.asc
+[rmap] INFO: Loaded identity 'Nicolas' from /home/softsec/tatou-2026/server/keys/clients/pki/Nicolas.asc
+[rmap] INFO: Loaded identity 'Samuele' from /home/softsec/tatou-2026/server/keys/clients/pki/Samuele.asc
+[*] Initializing RMAP Connection Manager...
+[-] Loading Private Identity: group17_private.asc
+
+[+] SUCCESS: Cryptographic backend initialized perfectly.
+[+] Total target VM nodes discovered and trusted: 31

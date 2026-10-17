@@ -1,0 +1,32 @@
+server-1  | /usr/local/lib/python3.12/site-packages/pgpy/constants.py:193: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+server-1  |   SymmetricKeyAlgorithm.TripleDES: algorithms.TripleDES,
+server-1  | /usr/local/lib/python3.12/site-packages/pgpy/constants.py:200: CryptographyDeprecationWarning: Camellia has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.Camellia and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 49.0.0.
+server-1  |   SymmetricKeyAlgorithm.Camellia128: algorithms.Camellia,
+server-1  | /usr/local/lib/python3.12/site-packages/pgpy/constants.py:201: CryptographyDeprecationWarning: Camellia has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.Camellia and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 49.0.0.
+server-1  |   SymmetricKeyAlgorithm.Camellia192: algorithms.Camellia,
+server-1  | /usr/local/lib/python3.12/site-packages/pgpy/constants.py:202: CryptographyDeprecationWarning: Camellia has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.Camellia and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 49.0.0.
+server-1  |   SymmetricKeyAlgorithm.Camellia256: algorithms.Camellia}
+server-1  | /usr/local/lib/python3.12/site-packages/pgpy/symenc.py:50: CryptographyDeprecationWarning: CFB has been moved to cryptography.hazmat.decrepit.ciphers.modes.CFB and will be removed from cryptography.hazmat.primitives.ciphers.modes in 49.0.0.
+server-1  |   decryptor = Cipher(alg.cipher(key), modes.CFB(iv), default_backend()).decryptor()
+server-1  | /usr/local/lib/python3.12/site-packages/pgpy/symenc.py:29: CryptographyDeprecationWarning: CFB has been moved to cryptography.hazmat.decrepit.ciphers.modes.CFB and will be removed from cryptography.hazmat.primitives.ciphers.modes in 49.0.0.
+server-1  |   encryptor = Cipher(alg.cipher(key), modes.CFB(iv), default_backend()).encryptor()
+server-1  | [2026-10-16 12:28:31 +0000] [1] [INFO] Handling signal: term
+server-1  | [2026-10-16 12:28:31 +0000] [7] [INFO] Worker exiting (pid: 7)
+server-1  | [2026-10-16 12:28:31 +0000] [1] [INFO] Shutting down: Master
+server-1  | Starting server...
+server-1  | [2026-10-16 12:32:17 +0000] [1] [INFO] Starting gunicorn 26.0.0
+server-1  | [2026-10-16 12:32:17 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+server-1  | [2026-10-16 12:32:17 +0000] [1] [INFO] Using worker: sync
+server-1  | [2026-10-16 12:32:17 +0000] [7] [INFO] Booting worker with pid: 7
+server-1  | /usr/local/lib/python3.12/site-packages/pgpy/constants.py:193: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+server-1  |   SymmetricKeyAlgorithm.TripleDES: algorithms.TripleDES,
+server-1  | /usr/local/lib/python3.12/site-packages/pgpy/constants.py:200: CryptographyDeprecationWarning: Camellia has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.Camellia and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 49.0.0.
+server-1  |   SymmetricKeyAlgorithm.Camellia128: algorithms.Camellia,
+server-1  | /usr/local/lib/python3.12/site-packages/pgpy/constants.py:201: CryptographyDeprecationWarning: Camellia has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.Camellia and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 49.0.0.
+server-1  |   SymmetricKeyAlgorithm.Camellia192: algorithms.Camellia,
+server-1  | /usr/local/lib/python3.12/site-packages/pgpy/constants.py:202: CryptographyDeprecationWarning: Camellia has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.Camellia and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 49.0.0.
+server-1  |   SymmetricKeyAlgorithm.Camellia256: algorithms.Camellia}
+server-1  | /usr/local/lib/python3.12/site-packages/pgpy/symenc.py:50: CryptographyDeprecationWarning: CFB has been moved to cryptography.hazmat.decrepit.ciphers.modes.CFB and will be removed from cryptography.hazmat.primitives.ciphers.modes in 49.0.0.
+server-1  |   decryptor = Cipher(alg.cipher(key), modes.CFB(iv), default_backend()).decryptor()
+server-1  | /usr/local/lib/python3.12/site-packages/pgpy/symenc.py:29: CryptographyDeprecationWarning: CFB has been moved to cryptography.hazmat.decrepit.ciphers.modes.CFB and will be removed from cryptography.hazmat.primitives.ciphers.modes in 49.0.0.
+server-1  |   encryptor = Cipher(alg.cipher(key), modes.CFB(iv), default_backend()).encryptor()
