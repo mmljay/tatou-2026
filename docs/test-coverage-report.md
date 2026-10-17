@@ -7,50 +7,56 @@ pytest-cov against the server source code.
 
 ## 2. Test Execution Results
 
-- Tests passed: 55
-- Total statements measured: 1,236
-- Statements covered: 468
-- Statements missed: 768
-- Overall statement coverage: 38%
+- Tests passed: 52
+- Tests failed: 0
+- Total statements measured: 1,228
+- Statements covered: 640
+- Statements missed: 588
+- Overall statement coverage: 52%
 
 ## 3. Component Coverage
 
 | Component | Coverage |
 |---|---:|
 | add_after_eof.py | 80% |
-| invisible_text_watermark.py | 80% |
+| invisible_text_watermark.py | 79% |
 | metadata_watermark.py | 83% |
-| unsafe_bash_bridge_append_eof.py | 95% |
+| unsafe_bash_bridge_append_eof.py | 77% |
 | watermarking_method.py | 80% |
 | whitespace_watermark.py | 78% |
 | server.py | 25% |
 | watermarking_utils.py | 33% |
-| extract_watermarks.py | 0% |
-| read_watermarks.py | 0% |
-| rotate_legacy_version_links.py | 0% |
-| watermarking_cli.py | 0% |
+| test_api.py | 100% |
+| test_fuzz_create_user.py | 100% |
+| test_fuzz_json_bodies.py | 100% |
+| test_fuzz_login.py | 100% |
+| test_fuzz_missing_fields.py | 100% |
+| test_hypothesis_create_user.py | 100% |
+| test_hypothesis_login.py | 100% |
+| test_metadata_watermark.py | 100% |
+| test_watermarking_all_methods.py | 89% |
 
 ## 4. Analysis
 
-The watermarking implementations have coverage between 78% and
-95%. The unsafe Bash bridge implementation has the highest
-coverage at 95%.
+The metadata watermark implementation achieved 83% coverage.
+Other watermark implementations achieved between 77% and 80%,
+while the main server module achieved 25%.
 
-The main server module has 25% coverage, indicating that many
-statements and API execution paths were not exercised.
-
-The utility scripts with 0% coverage were not exercised by this
-test run. This does not establish whether those scripts work
-correctly or incorrectly.
+The test suite exercises input validation, account creation,
+login validation, and watermark functionality. However, many
+API execution paths remain untested.
 
 ## 5. Limitations
 
-Statement coverage measures executed code, not overall security
-or complete functional correctness.
+Statement coverage measures executed code. It does not prove
+complete functional correctness, security, or compliance with
+every platform requirement.
 
-These results alone do not prove that access control, IDOR
-protection, document deletion, or every API endpoint behaves
-correctly.
+The six skipped watermark test cases were related to methods
+reported as not applicable to the sample PDF.
+
+The coverage run does not independently establish that every
+document ownership, IDOR, deletion, or RMAP requirement passes.
 
 ## 6. Recommended Improvements
 
@@ -59,4 +65,4 @@ correctly.
 3. Cover successful and unsuccessful API requests.
 4. Test RMAP handshakes, version creation, and PDF retrieval.
 5. Add tests for currently untested utility scripts.
-6. Rerun the suite and update the coverage figures after changes.
+6. Re-run coverage after further code changes.

@@ -38,13 +38,12 @@ actual assertions and recorded responses.
 | `test_hypothesis_create_user.py` | Property-based account-creation input tests |
 | `test_hypothesis_login.py` | Property-based login input tests |
 | `test_metadata_watermark.py` | Metadata watermark round-trip, wrong key, and missing secret |
-| `test_unsafe_bash_bridge.py` | Watermark round-trip, shell metacharacters, and missing EOF marker |
 | `test_watermarking_all_methods.py` | Applicability, watermark creation, and secret recovery across registered methods |
 
 ## 4. Evidence and Limitations
 
-The test suite previously completed with 55 passing tests
-and 38% statement coverage.
+The latest recorded test run completed with 52 passing tests,
+0 failures, and 52% statement coverage across 1,228 statements.
 
 Coverage is a measure of executed code, not proof that every
 requirement is satisfied.

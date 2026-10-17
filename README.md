@@ -129,7 +129,7 @@ server/.venv/bin/python -m pytest server/test/ \
 
 The HTML report is generated in `artifacts/coverage-html/`.
 
-The recorded test run completed with 55 passing tests and 38% statement coverage across 1,236 statements. Coverage indicates which statements were executed; it does not prove complete correctness or security.
+The latest recorded test run completed with 52 passing tests, 0 failures, and 52% statement coverage across 1,228 statements (640 covered and 588 missed). Coverage indicates which statements were executed; it does not prove complete correctness or security.
 
 See:
 
